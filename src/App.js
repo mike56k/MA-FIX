@@ -28,18 +28,20 @@ class App extends React.Component {
   }
   _isMounted = false;
   componentDidMount() {
+    this._isMounted = true;
+
     bridge.send("VKWebAppGetUserInfo", {}).then((user) => {
-      this.setState({ user: user });
+      if (this._isMounted) {
+        this.setState({ user: user });
+      }
     });
   }
   componentWillUnmount() {
     this._isMounted = false;
   }
   getImage = async () => {
-    this._isMounted = true;
-
     const image = document.getElementById("url").value;
-    if (this._isMounted) {
+    if (image) {
       this.setState({ image: image });
     }
   };
@@ -60,9 +62,8 @@ class App extends React.Component {
               "VK Apps Image Example"
             )}
           </PanelHeader>
-
           <Group header={<Header mode="secondary">Задание</Header>}>
-            <Div>Изменил ББББ</Div>
+            <Div>ТААААК</Div>
             <Div>
               Для облегчения тестирования НУ КА можно использовать картинку{" "}
               <Text weight="semibold">https://service.pavel.im/image</Text>{" "}
