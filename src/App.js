@@ -26,7 +26,19 @@ class App extends React.Component {
       image: null,
     };
   }
-
+  parseQueryString = (string) => {
+    return string
+      .slice(1)
+      .split("&")
+      .map((queryParam) => {
+        let kvp = queryParam.split("=");
+        return { key: kvp[0], value: kvp[1] };
+      })
+      .reduce((query, kvp) => {
+        query[kvp.key] = kvp.value;
+        return query;
+      }, {});
+  };
   componentDidMount() {
     bridge.send("VKWebAppGetUserInfo", {}).then((user) => {
       this.setState({ user: user });
@@ -43,6 +55,8 @@ class App extends React.Component {
   };
 
   render() {
+    const queryParams = this.parseQueryString(window.location.search);
+    const hashParams = this.parseQueryString(window.location.hash);
     return (
       <View activePanel="main">
         <Panel id="main">
