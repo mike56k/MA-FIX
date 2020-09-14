@@ -74,7 +74,7 @@ class App extends React.Component {
           </PanelHeader>
 
           <Group header={<Header mode="secondary">Задание</Header>}>
-            <Div>Изменил ААААААА</Div>
+            <Div>Изменил ББББ</Div>
             <Div>
               Для облегчения тестирования можно использовать картинку{" "}
               <Text weight="semibold">https://service.pavel.im/image</Text>{" "}
