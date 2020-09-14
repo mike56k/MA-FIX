@@ -64,8 +64,7 @@ class App extends React.Component {
           <Group header={<Header mode="secondary">Задание</Header>}>
             <Div>Изменил ББББ</Div>
             <Div>
-              Для облегчения тестирования лОКОКОКООКОК можно использовать
-              картинку{" "}
+              Для облегчения тестирования НУ КА можно использовать картинку{" "}
               <Text weight="semibold">https://service.pavel.im/image</Text>{" "}
               (good code — все круто, bad code — сервер получил параметры
               запуска)
