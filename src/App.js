@@ -89,7 +89,7 @@ class App extends React.Component {
                 <img
                   src={image}
                   alt="remote file"
-                  referrerpolicy="no-referrer-when-downgrade"
+                  referrerpolicy="no-referrer"
                 />
               </Div>
             )}
