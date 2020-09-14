@@ -28,8 +28,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    bridge.send("VKWebAppGetUserInfo", {}).then((user) => {
-      this.setState({ user });
+    bridge.send("VKWebAppGetUserInfo").then((user) => {
+      this.setState({ user: user });
     });
   }
 
@@ -39,23 +39,21 @@ class App extends React.Component {
     console.log({ image });
 
     if (image) {
-      this.setState({ image });
+      this.setState({ image: image });
     }
   };
 
   render() {
-    const { user, image } = this.state;
-
     return (
       <View activePanel="main">
         <Panel id="main">
           <PanelHeader>
-            {user ? (
+            {this.state.user ? (
               <PanelHeaderContent
                 status="VK Apps Image Example"
-                before={<Avatar size={36} src={user.photo_100} />}
+                before={<Avatar size={36} src={this.state.user.photo_100} />}
               >
-                {user.first_name}
+                {this.state.user.first_name}
               </PanelHeaderContent>
             ) : (
               "VK Apps Image Example"
@@ -64,11 +62,11 @@ class App extends React.Component {
 
           <Group header={<Header mode="secondary">Задание</Header>}>
             <Div>
-              У нас есть мини-приложение, которое имеет возможность загружать
-              изображения по внешней ссылке. Увы, в приложении допущена ошибка,
-              из-за чего удаленный сервер получает параметры запуска
-              пользователей, которые вставляют ссылку. Нужно объяснить почему
-              так происходит и исправить ситуацию красиво и лаконично.
+              Изменил У нас есть мини-приложение, которое имеет возможность
+              загружать изображения по внешней ссылке. Увы, в приложении
+              допущена ошибка, из-за чего удаленный сервер получает параметры
+              запуска пользователей, которые вставляют ссылку. Нужно объяснить
+              почему так происходит и исправить ситуацию красиво и лаконично.
             </Div>
             <Div>
               Для облегчения тестирования можно использовать картинку{" "}
@@ -85,9 +83,9 @@ class App extends React.Component {
               </Button>
             </FormLayout>
 
-            {!!image && (
+            {this.state.image && (
               <Div style={{ textAlign: "center" }}>
-                <img src={image} alt="remote file" />
+                <img src={this.state.image} alt="remote file" />
               </Div>
             )}
           </Group>
