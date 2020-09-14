@@ -22,7 +22,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      user: null,
+      //    user: null,
       image: null,
     };
   }
@@ -30,12 +30,12 @@ class App extends React.Component {
   _isLoaded = false;
   componentDidMount() {
     alert("OK?");
-    bridge.send("VKWebAppGetUserInfo", {}).then((user) => {
-      if (this._isMounted) {
-        this.setState({ user: user });
-        this._isMounted = false;
-      }
-    });
+    // bridge.send("VKWebAppGetUserInfo", {}).then((user) => {
+    //   if (this._isMounted) {
+    //     this.setState({ user: user });
+    //     this._isMounted = false;
+    //   }
+    // });
   }
   componentWillUnmount() {
     this._isMounted = false;
@@ -57,7 +57,7 @@ class App extends React.Component {
     return (
       <View activePanel="main">
         <Panel id="main">
-          <PanelHeader>
+          {/* <PanelHeader>
             {this.state.user ? (
               <PanelHeaderContent
                 status="VK Apps Image Example"
@@ -68,7 +68,8 @@ class App extends React.Component {
             ) : (
               "VK Apps Image Example"
             )}
-          </PanelHeader>
+          </PanelHeader> */}
+
           <Group header={<Header mode="secondary">Задание</Header>}>
             <Div>Изменил ББББ</Div>
             <Div>
