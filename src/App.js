@@ -12,6 +12,8 @@ import {
   PanelHeader,
   PanelHeaderContent,
   Text,
+  List,
+  Cell,
   View,
 } from "@vkontakte/vkui";
 
@@ -95,6 +97,31 @@ class App extends React.Component {
                 <img src={this.state.image} alt="remote file" />
               </Div>
             )}
+          </Group>
+          <Group title="Query params">
+            <List>
+              {Object.keys(queryParams).map((key) => {
+                let value = queryParams[key];
+                return (
+                  <Cell description={key}>
+                    {value ? value : <span style={{ color: "red" }}>-</span>}
+                  </Cell>
+                );
+              })}
+            </List>
+          </Group>
+
+          <Group title="Hash params">
+            <List>
+              {Object.keys(hashParams).map((key) => {
+                let value = hashParams[key];
+                return (
+                  <Cell description={key}>
+                    {value ? value : <span style={{ color: "red" }}>-</span>}
+                  </Cell>
+                );
+              })}
+            </List>
           </Group>
         </Panel>
       </View>
