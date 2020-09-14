@@ -26,13 +26,13 @@ class App extends React.Component {
       image: null,
     };
   }
-  _isMounted = false;
+  _isMounted = true;
   componentDidMount() {
-    this._isMounted = true;
-
+    alert("OK?");
     bridge.send("VKWebAppGetUserInfo", {}).then((user) => {
       if (this._isMounted) {
         this.setState({ user: user });
+        this._isMounted = false;
       }
     });
   }
@@ -63,7 +63,7 @@ class App extends React.Component {
             )}
           </PanelHeader>
           <Group header={<Header mode="secondary">Задание</Header>}>
-            <Div>ТААААК</Div>
+            <Div>Изменил ББББ</Div>
             <Div>
               Для облегчения тестирования НУ КА можно использовать картинку{" "}
               <Text weight="semibold">https://service.pavel.im/image</Text>{" "}
