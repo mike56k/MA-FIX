@@ -27,6 +27,7 @@ class App extends React.Component {
     };
   }
   _isMounted = true;
+  _isLoaded = false;
   componentDidMount() {
     alert("OK?");
     bridge.send("VKWebAppGetUserInfo", {}).then((user) => {
@@ -43,9 +44,15 @@ class App extends React.Component {
     const image = document.getElementById("url").value;
     if (image) {
       this.setState({ image: image });
+      this._isLoaded = true;
     }
   };
-
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.image !== this.state.image) {
+      this._isLoaded = false;
+      alert("IMAGE CHANGED");
+    }
+  }
   render() {
     return (
       <View activePanel="main">
@@ -81,7 +88,9 @@ class App extends React.Component {
 
             {this.state.image && (
               <Div style={{ textAlign: "center" }}>
-                <img src={this.state.image} alt="remote file" />
+                {this._isLoaded && (
+                  <img src={this.state.image} alt="remote file" />
+                )}
               </Div>
             )}
           </Group>
