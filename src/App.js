@@ -12,8 +12,6 @@ import {
   PanelHeader,
   PanelHeaderContent,
   Text,
-  List,
-  Cell,
   View,
 } from "@vkontakte/vkui";
 
@@ -28,37 +26,25 @@ class App extends React.Component {
       image: null,
     };
   }
-  parseQueryString = (string) => {
-    return string
-      .slice(1)
-      .split("&")
-      .map((queryParam) => {
-        let kvp = queryParam.split("=");
-        return { key: kvp[0], value: kvp[1] };
-      })
-      .reduce((query, kvp) => {
-        query[kvp.key] = kvp.value;
-        return query;
-      }, {});
-  };
+  _isMounted = false;
   componentDidMount() {
     bridge.send("VKWebAppGetUserInfo", {}).then((user) => {
       this.setState({ user: user });
     });
   }
-
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
   getImage = async () => {
-    const image = document.getElementById("url").value;
+    this._isMounted = true;
 
-    if (image) {
-      alert({ image });
+    const image = document.getElementById("url").value;
+    if (this._isMounted) {
       this.setState({ image: image });
     }
   };
 
   render() {
-    const queryParams = this.parseQueryString(window.location.search);
-    const hashParams = this.parseQueryString(window.location.hash);
     return (
       <View activePanel="main">
         <Panel id="main">
@@ -78,7 +64,8 @@ class App extends React.Component {
           <Group header={<Header mode="secondary">Задание</Header>}>
             <Div>Изменил ББББ</Div>
             <Div>
-              Для облегчения тестирования можно использовать картинку{" "}
+              Для облегчения тестирования лОКОКОКООКОК можно использовать
+              картинку{" "}
               <Text weight="semibold">https://service.pavel.im/image</Text>{" "}
               (good code — все круто, bad code — сервер получил параметры
               запуска)
@@ -92,36 +79,11 @@ class App extends React.Component {
               </Button>
             </FormLayout>
 
-            {this.state.image && this.state.user && (
+            {this.state.image && (
               <Div style={{ textAlign: "center" }}>
                 <img src={this.state.image} alt="remote file" />
               </Div>
             )}
-          </Group>
-          <Group title="Query params">
-            <List>
-              {Object.keys(queryParams).map((key) => {
-                let value = queryParams[key];
-                return (
-                  <Cell description={key}>
-                    {value ? value : <span style={{ color: "red" }}>-</span>}
-                  </Cell>
-                );
-              })}
-            </List>
-          </Group>
-
-          <Group title="Hash params">
-            <List>
-              {Object.keys(hashParams).map((key) => {
-                let value = hashParams[key];
-                return (
-                  <Cell description={key}>
-                    {value ? value : <span style={{ color: "red" }}>-</span>}
-                  </Cell>
-                );
-              })}
-            </List>
           </Group>
         </Panel>
       </View>
