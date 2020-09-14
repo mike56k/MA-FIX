@@ -4,6 +4,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import bridge from "@vkontakte/vk-bridge";
 import App from "./App";
+window.history.replaceState(null, null, "/");
 
 bridge.send("VKWebAppInit", {});
 
