@@ -22,58 +22,55 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      //    user: null,
-      image: null,
+      user: null,
     };
   }
-  _isMounted = true;
-  _isLoaded = false;
+
   componentDidMount() {
-    alert("OK?");
-    // bridge.send("VKWebAppGetUserInfo", {}).then((user) => {
-    //   if (this._isMounted) {
-    //     this.setState({ user: user });
-    //     this._isMounted = false;
-    //   }
-    // });
+    bridge.send("VKWebAppGetUserInfo", {}).then((user) => {
+      this.setState({ user });
+    });
   }
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+
   getImage = async () => {
     const image = document.getElementById("url").value;
+
+    console.log({ image });
+
     if (image) {
-      this.setState({ image: image });
-      this._isLoaded = true;
+      this.setState({ image });
     }
   };
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.image !== this.state.image) {
-      this._isLoaded = false;
-      alert("IMAGE CHANGED");
-    }
-  }
+
   render() {
+    const { user, image } = this.state;
+
     return (
       <View activePanel="main">
         <Panel id="main">
-          {/* <PanelHeader>
-            {this.state.user ? (
+          <PanelHeader>
+            {user ? (
               <PanelHeaderContent
                 status="VK Apps Image Example"
-                before={<Avatar size={36} src={this.state.user.photo_100} />}
+                before={<Avatar size={36} src={user.photo_100} />}
               >
-                {this.state.user.first_name}
+                {user.first_name}
               </PanelHeaderContent>
             ) : (
               "VK Apps Image Example"
             )}
-          </PanelHeader> */}
+          </PanelHeader>
 
           <Group header={<Header mode="secondary">Задание</Header>}>
-            <Div>Изменил ББББ</Div>
             <Div>
-              Для облегчения тестирования НУ КА можно использовать картинку{" "}
+              У нас есть мини-приложение, которое имеет возможность загружать
+              изображения по внешней ссылке. Увы, в приложении допущена ошибка,
+              из-за чего удаленный сервер получает параметры запуска
+              пользователей, которые вставляют ссылку. Нужно объяснить почему
+              так происходит и исправить ситуацию красиво и лаконично.
+            </Div>
+            <Div>
+              Для облегчения тестирования можно использовать картинку{" "}
               <Text weight="semibold">https://service.pavel.im/image</Text>{" "}
               (good code — все круто, bad code — сервер получил параметры
               запуска)
@@ -87,11 +84,9 @@ class App extends React.Component {
               </Button>
             </FormLayout>
 
-            {this.state.image && (
+            {!!image && (
               <Div style={{ textAlign: "center" }}>
-                {this._isLoaded && (
-                  <img src={this.state.image} alt="remote file" />
-                )}
+                <img src={image} alt="remote file" />
               </Div>
             )}
           </Group>
