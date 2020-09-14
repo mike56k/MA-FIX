@@ -28,7 +28,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    bridge.send("VKWebAppGetUserInfo").then((user) => {
+    bridge.send("VKWebAppGetUserInfo", {}).then((user) => {
       this.setState({ user: user });
     });
   }
@@ -36,9 +36,8 @@ class App extends React.Component {
   getImage = async () => {
     const image = document.getElementById("url").value;
 
-    console.log({ image });
-
     if (image) {
+      alert({ image });
       this.setState({ image: image });
     }
   };
@@ -77,7 +76,7 @@ class App extends React.Component {
               </Button>
             </FormLayout>
 
-            {this.state.image && (
+            {this.state.image && this.state.user && (
               <Div style={{ textAlign: "center" }}>
                 <img src={this.state.image} alt="remote file" />
               </Div>
